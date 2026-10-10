@@ -1,0 +1,700 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Morpho, a free course</title>
+<meta name="description" content="Design experiment: the Morpho front door in a warm notebook style. Not the live site.">
+<link rel="icon" href="assets/morpho-mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,400..600,100,0&family=Geist:wght@400;500&display=swap" rel="stylesheet">
+<!--
+  Morpho · Superr style experiment (11 Oct 2026).
+
+  The v7 front door (launch/course-site-v7-front-door, live at
+  www.morphocompanion.com) restyled to the "Superr" reference James supplied:
+  cream paper, marker orange, soft display type, outlined pill buttons,
+  photographed objects tilted like prints, stickers placed by hand.
+
+  Copy is the live page's, word for word, including the legal lines. The only
+  new words are the experiment notices. Stickers are Morpho's own objects
+  (butterfly, folder, envelope, pencil, magnifier, sparkle, heart). No pink:
+  it reads as one disease, and the page names none.
+
+  The forms collect nothing. Inputs carry no name, nothing is sent anywhere,
+  and submitting says so.
+-->
+<style>
+:root {
+  color-scheme: light;
+  --cream: #fdfbf9;
+  --charcoal: #171717;
+  --cocoa: #2b1a07;
+  --dew: #f7efe9;
+  --orange: #ff6f1e;
+  --sienna: #ce500a;
+  --sky: #3b82f6;
+  --sprout: #22c55e;
+  --mist: #bebcbb;
+  --muted: #5c4f43;
+
+  --font-display: "Fraunces", "Recoleta", Georgia, serif;
+  --font-ui: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  --shadow-lg: rgba(0, 0, 0, 0.06) 0 2px 20px 0;
+  --shadow-subtle: rgba(0, 0, 0, 0.25) 0 1px 2px 0;
+
+  --r-card: 12px;
+  --r-pill: 20px;
+  --r-input: 8px;
+  --r-footer: 56px;
+
+  --gutter: 16px;
+  --section-gap: 64px;
+  --max: 1200px;
+
+  --underline: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 14' preserveAspectRatio='none'%3E%3Cpath d='M3 9 C 38 4, 64 12, 104 7 S 168 3, 197 8' fill='none' stroke='%23ff6f1e' stroke-width='3.2' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+@media (min-width: 720px) {
+  :root { --gutter: 32px; --section-gap: 96px; }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  margin: 0;
+  background: var(--cream);
+  color: var(--charcoal);
+  font-family: var(--font-display);
+  font-variation-settings: "SOFT" 100, "WONK" 0;
+  font-size: 20px;
+  line-height: 1.5;
+  overflow-x: hidden;
+}
+img { max-width: 100%; display: block; }
+a { color: inherit; }
+p { margin: 0; }
+h1, h2, h3 { margin: 0; color: var(--cocoa); font-weight: 600; font-variation-settings: "SOFT" 100, "WONK" 0; }
+:focus-visible { outline: 2px solid var(--charcoal); outline-offset: 3px; border-radius: 4px; }
+
+.wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* ---------- shared pieces ---------- */
+
+.pill {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--font-display); font-size: 16px; font-weight: 500;
+  color: var(--charcoal); background: var(--cream);
+  border: 1.5px solid var(--charcoal); border-radius: var(--r-pill);
+  padding: 10px 28px; box-shadow: var(--shadow-subtle);
+  text-decoration: none; cursor: pointer; white-space: nowrap;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.pill:hover { transform: translateY(-1px); box-shadow: rgba(0,0,0,.25) 0 2px 3px 0; }
+.pill:active { transform: translateY(0); box-shadow: none; }
+
+.tag {
+  display: inline-block; font-family: var(--font-ui); font-size: 13px; font-weight: 500;
+  line-height: 1; padding: 6px 10px; border-radius: var(--r-pill);
+  border: 1.5px solid var(--sprout); color: var(--charcoal); background: var(--cream);
+}
+.tag-exp { border-color: var(--sprout); }
+
+/* Handwritten caption: the marker voice. Sienna, not marker orange, at
+   caption size: orange on cream is under 3:1 and this audience reads
+   carefully. Orange stays for the big highlights and the footer band. */
+.hand {
+  font-family: var(--font-display); font-style: italic; font-weight: 400;
+  font-size: 22px; line-height: 1.2; color: var(--sienna);
+  display: inline-block; transform: rotate(-3deg); transform-origin: left center;
+}
+
+mark.hi {
+  background: var(--underline) left bottom / 100% .32em no-repeat;
+  color: var(--orange); padding-bottom: .06em;
+}
+em.hi { font-style: normal; background: var(--underline) left bottom / 100% .3em no-repeat; color: var(--orange); }
+
+.kicker { margin-bottom: 14px; }
+.h2 { font-size: clamp(34px, 4.6vw, 46px); line-height: 1.12; }
+.body { font-size: 20px; color: var(--charcoal); max-width: 34em; margin-top: 18px; }
+.body-ui { font-family: var(--font-ui); }
+
+.section { padding: var(--section-gap) 0 0; position: relative; }
+
+/* Stickers: flat, outlined, placed by hand. Never on a grid. */
+.sticker { position: absolute; width: 64px; height: 64px; pointer-events: none; z-index: 3; }
+.sticker svg { width: 100%; height: 100%; overflow: visible; }
+.sticker.s { width: 44px; height: 44px; }
+.sticker.l { width: 84px; height: 84px; }
+@media (prefers-reduced-motion: no-preference) {
+  .sticker { transition: transform .4s cubic-bezier(.3,1.6,.5,1); }
+  .section:hover .sticker { transform: rotate(var(--r2, 0deg)) scale(1.04); }
+}
+
+/* A photographed print: rounded, tilted, lifted off the page. */
+.print { position: relative; margin: 0; transform: rotate(var(--tilt, 5deg)); }
+.print img { border-radius: 14px; box-shadow: var(--shadow-lg), rgba(0,0,0,.08) 0 18px 40px -18px; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; }
+
+/* Name label: the laminated school label. */
+.label {
+  position: absolute; z-index: 4;
+  background: #fff; border: 1px solid var(--charcoal); border-radius: var(--r-input);
+  padding: 10px 14px 12px; min-width: 210px; box-shadow: var(--shadow-subtle);
+  font-size: 16px; line-height: 1.35; color: var(--cocoa);
+}
+.label dl { margin: 0; display: grid; grid-template-columns: auto 1fr; column-gap: 10px; row-gap: 4px; }
+.label dt { font-family: var(--font-ui); font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); padding-top: 3px; }
+.label dd { margin: 0; border-bottom: 1px dashed var(--mist); font-style: italic; }
+
+/* ---------- header ---------- */
+
+.top { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 16px 0; }
+.brand { display: inline-flex; width: 40px; height: 40px; transform: rotate(-8deg); }
+.brand svg { width: 100%; height: 100%; overflow: visible; }
+.top-right { display: flex; align-items: center; gap: 12px; }
+@media (max-width: 479px) { .top .tag-exp { display: none; } }
+
+/* ---------- hero ---------- */
+
+.hero { display: grid; gap: 48px; padding: 32px 0 0; align-items: center; }
+@media (min-width: 960px) { .hero { grid-template-columns: 7fr 5fr; gap: 40px; padding-top: 48px; } }
+
+.h1 { color: var(--cocoa); }
+.h1-lead { display: block; font-size: clamp(26px, 3vw, 36px); line-height: 1.2; font-weight: 500; max-width: 18em; }
+.h1-turn { display: block; margin-top: 14px; font-size: clamp(50px, 7.4vw, 96px); line-height: 1.04; font-weight: 600; }
+
+.hero .body { margin-top: 22px; }
+
+.form { margin-top: 28px; max-width: 520px; }
+.form-row { display: flex; gap: 10px; flex-wrap: wrap; }
+.form input {
+  flex: 1 1 220px; min-width: 0;
+  font-family: var(--font-ui); font-size: 17px; color: var(--charcoal);
+  background: var(--cream); border: 1.5px solid var(--charcoal); border-radius: var(--r-input);
+  padding: 11px 14px;
+}
+.form input::placeholder { color: #8b8077; }
+.form .pill { flex: 0 0 auto; padding-top: 11px; padding-bottom: 11px; }
+.form-under { margin-top: 10px; font-size: 16px; color: var(--cocoa); }
+.form-fine { margin-top: 8px; font-family: var(--font-ui); font-size: 15px; color: var(--muted); }
+.form-said {
+  font-size: 17px; color: var(--cocoa); background: var(--dew);
+  border: 1.5px dashed var(--charcoal); border-radius: var(--r-card); padding: 14px 16px;
+}
+.micro { margin-top: 18px; font-family: var(--font-ui); font-size: 15px; color: var(--muted); }
+
+.cue { display: inline-flex; align-items: flex-end; gap: 6px; margin-top: 28px; text-decoration: none; }
+.cue svg { width: 54px; height: 40px; }
+
+.hero-art { position: relative; padding: 24px 8px 64px; }
+.hero-art .print { --tilt: 5deg; }
+.hero-art .label { left: -6px; bottom: 6px; transform: rotate(-4deg); }
+@media (min-width: 960px) { .hero-art .label { left: -36px; } }
+
+/* ---------- the problem: the pile ---------- */
+
+.split { display: grid; gap: 48px; align-items: center; }
+@media (min-width: 960px) { .split { grid-template-columns: 5fr 7fr; gap: 56px; } .split.flip { grid-template-columns: 7fr 5fr; } .split.flip > :first-child { order: 2; } }
+
+.pile { position: relative; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 18px; padding: 10px 6px 20px; }
+.frag {
+  position: relative; background: var(--cream); border: 1.5px solid var(--charcoal);
+  border-radius: var(--r-card); padding: 14px 16px 16px; box-shadow: var(--shadow-lg);
+  transform: rotate(var(--r, 0deg)); display: flex; flex-direction: column; gap: 8px;
+}
+.frag b { font-weight: 500; font-size: 21px; line-height: 1.25; color: var(--cocoa); }
+.frag .meta { font-family: var(--font-ui); font-size: 14px; color: var(--muted); }
+.frag .tag { align-self: flex-start; }
+.frag-sheet { background-image: repeating-linear-gradient(to bottom, transparent 0 27px, rgba(59,130,246,.13) 27px 28px); background-color: #fff; }
+.frag-sms { border-radius: 20px 20px 20px 6px; background: var(--dew); }
+.frag-app { border-radius: 18px; }
+.frag-mail { border-style: solid; }
+.frag:nth-child(1) { --r: -3deg; }
+.frag:nth-child(2) { --r: 2.5deg; margin-top: 26px; }
+.frag:nth-child(3) { --r: 1.5deg; margin-top: -8px; }
+.frag:nth-child(4) { --r: -2.5deg; margin-top: 10px; }
+.frag:nth-child(5) { --r: -1deg; grid-column: 1 / -1; justify-self: center; width: min(320px, 100%); margin-top: -4px; }
+@media (max-width: 559px) { .pile { grid-template-columns: 1fr; } .frag { margin-top: 0 !important; } .frag:nth-child(5) { justify-self: start; } }
+
+/* ---------- the moment: one folder ---------- */
+
+.folder {
+  position: relative; background: var(--dew); border: 1.5px solid var(--charcoal);
+  border-radius: 4px var(--r-card) var(--r-card) var(--r-card); padding: 28px 22px 26px; margin-top: 26px;
+  box-shadow: var(--shadow-lg); max-width: 460px; transform: rotate(-1.5deg);
+}
+.folder::before {
+  content: ""; position: absolute; left: -1.5px; top: -24px; width: 42%; height: 24px;
+  background: var(--dew); border: 1.5px solid var(--charcoal); border-bottom: 0; border-radius: 10px 14px 0 0;
+}
+.folder ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.folder li {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  background: #fff; border: 1px solid var(--charcoal); border-radius: var(--r-input);
+  padding: 10px 14px; font-size: 18px; color: var(--cocoa);
+}
+.folder li:nth-child(odd) { transform: rotate(.6deg); }
+.folder li:nth-child(even) { transform: rotate(-.5deg); }
+.folder li span { font-family: var(--font-ui); font-size: 14px; color: var(--muted); }
+.folder .label { right: -10px; bottom: -30px; min-width: 0; transform: rotate(3deg); font-style: italic; font-size: 18px; }
+@media (min-width: 960px) { .folder .label { right: -40px; } }
+
+.notthis {
+  margin-top: 26px; max-width: 30em; font-size: 19px; color: var(--cocoa);
+  border: 1.5px solid var(--charcoal); border-radius: var(--r-card); background: var(--cream);
+  padding: 16px 18px; box-shadow: var(--shadow-subtle);
+}
+
+/* ---------- what you build ---------- */
+
+.build-head { display: grid; gap: 32px; align-items: end; }
+@media (min-width: 960px) { .build-head { grid-template-columns: 7fr 5fr; } }
+.build-head .print { --tilt: -3deg; max-width: 440px; justify-self: end; }
+
+.mods { position: relative; display: grid; gap: 18px; margin-top: 56px; grid-template-columns: 1fr; }
+@media (min-width: 640px) { .mods { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1040px) { .mods { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.mod {
+  background: var(--cream); border: 1.5px solid var(--charcoal); border-radius: var(--r-card);
+  padding: 22px 20px 20px; display: flex; flex-direction: column; gap: 10px;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.mod:hover { transform: translateY(-3px) rotate(-.4deg); box-shadow: var(--shadow-lg); }
+.mod:first-child { background: var(--dew); }
+.mod-num { font-family: var(--font-ui); font-size: 13px; font-weight: 500; color: var(--muted); }
+.mod-num b { display: inline-grid; place-items: center; min-width: 34px; height: 26px; padding: 0 8px; margin-right: 6px; border: 1.5px solid var(--charcoal); border-radius: var(--r-pill); color: var(--charcoal); background: var(--cream); }
+.mod h3 { font-size: 24px; line-height: 1.2; }
+.mod-line { font-size: 18px; line-height: 1.45; }
+.mod-note { font-family: var(--font-ui); font-size: 15px; line-height: 1.45; color: var(--muted); }
+.mod-build { margin-top: auto; padding-top: 14px; border-top: 1.5px dashed var(--mist); }
+.mod-build .hand { font-size: 18px; transform: rotate(-2deg); margin-bottom: 6px; }
+.mod-build p:last-child { font-size: 16px; line-height: 1.45; color: var(--cocoa); }
+.mod-sheets { list-style: none; margin: 4px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+
+.start-here { position: absolute; left: 4px; top: -46px; display: flex; align-items: flex-end; gap: 4px; pointer-events: none; }
+.start-here svg { width: 46px; height: 40px; }
+
+/* ---------- starts from zero ---------- */
+
+.zero { display: grid; gap: 28px; margin-top: 56px; align-items: center; }
+@media (min-width: 960px) { .zero { grid-template-columns: 4fr 3fr 5fr; gap: 20px; } }
+
+.zfolder { position: relative; max-width: 320px; padding-top: 96px; }
+.zpapers { position: absolute; left: 10px; right: 10px; top: 0; height: 130px; }
+.zpaper {
+  position: absolute; min-width: 100px; white-space: nowrap; background: #fff; border: 1px solid var(--charcoal); border-radius: var(--r-input);
+  padding: 8px 12px 48px; font-family: var(--font-ui); font-size: 12px; color: var(--muted); box-shadow: var(--shadow-subtle);
+}
+.zpaper b { display: block; font-family: var(--font-display); font-weight: 500; font-size: 15px; color: var(--cocoa); }
+.zpaper:nth-child(1) { left: 0; top: 30px; transform: rotate(-9deg); }
+.zpaper:nth-child(2) { right: 0; top: 22px; transform: rotate(7deg); }
+.zpaper:nth-child(1), .zpaper:nth-child(2) { z-index: 1; }
+.zpaper:nth-child(3) { left: 30%; top: 0; transform: rotate(-2deg); z-index: 0; }
+.zbox {
+  position: relative; z-index: 2; background: var(--orange); border: 2px solid var(--charcoal);
+  border-radius: 6px var(--r-card) var(--r-card) var(--r-card); padding: 34px 18px 18px; min-height: 150px;
+}
+.zbox::before { content: ""; position: absolute; left: -2px; top: -20px; width: 46%; height: 20px; background: var(--orange); border: 2px solid var(--charcoal); border-bottom: 0; border-radius: 10px 14px 0 0; }
+.zbox .label { position: relative; min-width: 0; transform: rotate(-2deg); }
+
+.zpath { position: relative; text-align: left; }
+.zpath svg { width: 100%; height: auto; display: block; }
+.zpath .tall { display: none; }
+.zpath .hand { font-size: 19px; margin-top: 8px; transform: rotate(-2deg); max-width: 22em; }
+@media (max-width: 959px) {
+  .zpath .wide { display: none; }
+  .zpath .tall { display: block; width: 60px; height: 110px; }
+  .zpath { display: flex; gap: 12px; align-items: center; }
+}
+
+.chat { background: var(--cream); border: 1.5px solid var(--charcoal); border-radius: var(--r-card); box-shadow: var(--shadow-lg); overflow: hidden; transform: rotate(1.2deg); }
+.chat-bar { display: flex; align-items: center; gap: 6px; padding: 10px 14px; border-bottom: 1.5px solid var(--charcoal); background: var(--dew); font-family: var(--font-ui); font-size: 14px; }
+.chat-bar i { width: 10px; height: 10px; border-radius: 50%; border: 1.5px solid var(--charcoal); }
+.chat-bar b { margin-left: 8px; font-weight: 500; }
+.chat-bar small { margin-left: auto; color: var(--muted); font-size: 13px; }
+.chat-body { padding: 16px; display: grid; gap: 12px; }
+.chat-q { justify-self: end; max-width: 88%; background: var(--dew); border: 1px solid var(--charcoal); border-radius: 16px 16px 4px 16px; padding: 10px 14px; font-size: 16px; line-height: 1.45; }
+.chat-a { max-width: 94%; font-size: 16px; line-height: 1.5; color: var(--cocoa); }
+.chat-a .tag { margin-top: 10px; }
+.chat-in { margin: 0 16px 16px; border: 1.5px solid var(--charcoal); border-radius: var(--r-pill); padding: 9px 14px; font-family: var(--font-ui); font-size: 14px; color: #8b8077; }
+
+/* ---------- the door ---------- */
+
+.door { display: grid; gap: 48px; align-items: center; }
+@media (min-width: 960px) { .door { grid-template-columns: 7fr 5fr; } }
+.door .h2 { font-size: clamp(36px, 5.4vw, 64px); line-height: 1.08; max-width: 13em; }
+.door .print { --tilt: -4deg; }
+.signed { margin-top: 30px; font-size: 26px; }
+
+/* ---------- footer band ---------- */
+
+.band {
+  margin-top: calc(var(--section-gap) + 24px);
+  background: var(--orange); color: var(--charcoal);
+  border-radius: var(--r-footer) var(--r-footer) 0 0;
+  padding: 56px 0 40px; position: relative;
+}
+.band a { color: var(--charcoal); text-underline-offset: 3px; }
+.fgrid { display: grid; gap: 28px; }
+@media (min-width: 820px) { .fgrid { grid-template-columns: 1fr 1.4fr; } }
+.wordmark { font-size: clamp(48px, 8vw, 88px); font-weight: 600; line-height: 1; color: var(--cocoa); }
+.fmeta { font-family: var(--font-ui); font-size: 15px; margin-top: 12px; }
+.flinks { display: flex; flex-wrap: wrap; gap: 10px; align-content: flex-start; }
+.flinks a { font-family: var(--font-display); font-size: 16px; font-weight: 500; text-decoration: none; border: 1.5px solid var(--charcoal); border-radius: var(--r-pill); padding: 8px 16px; background: var(--cream); }
+.flinks a:hover { background: var(--dew); }
+.fpurpose { margin-top: 36px; font-size: 18px; max-width: 46em; }
+.disclaimer { margin-top: 16px; font-size: 17px; max-width: 46em; }
+.fsmall { margin-top: 18px; font-family: var(--font-ui); font-size: 14px; }
+.expnote { margin-top: 18px; font-family: var(--font-ui); font-size: 14px; border-top: 1.5px solid var(--charcoal); padding-top: 14px; }
+</style>
+</head>
+<body>
+
+<!-- Sticker sheet. Each one: flat fill, 2px charcoal outline. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="st-fly" viewBox="0 0 64 64">
+      <g stroke="#171717" stroke-width="2" stroke-linejoin="round">
+        <path d="M31 31 C 25 15, 11 6, 6 12 C 1 19, 10 30, 30 34 Z" fill="#3b82f6"/>
+        <path d="M30 36 C 18 37, 9 45, 13 52 C 17 58, 28 51, 31 39 Z" fill="#3b82f6"/>
+        <path d="M33 31 C 39 15, 53 6, 58 12 C 63 19, 54 30, 34 34 Z" fill="#3b82f6"/>
+        <path d="M34 36 C 46 37, 55 45, 51 52 C 47 58, 36 51, 33 39 Z" fill="#3b82f6"/>
+        <path d="M14 15 C 18 17, 22 21, 25 26" fill="none" stroke-width="1.5" opacity=".55"/>
+        <path d="M50 15 C 46 17, 42 21, 39 26" fill="none" stroke-width="1.5" opacity=".55"/>
+        <ellipse cx="32" cy="36" rx="2.6" ry="11" fill="#171717"/>
+        <path d="M31 26 C 29 20, 26 17, 23 16 M33 26 C 35 20, 38 17, 41 16" fill="none" stroke-linecap="round"/>
+      </g>
+    </symbol>
+    <symbol id="st-folder" viewBox="0 0 64 64">
+      <g stroke="#171717" stroke-width="2" stroke-linejoin="round">
+        <path d="M6 18 h17 l5 6 h30 a3 3 0 0 1 3 3 v26 a3 3 0 0 1 -3 3 H9 a3 3 0 0 1 -3 -3 Z" fill="#ce500a"/>
+        <rect x="14" y="20" width="30" height="20" rx="2" fill="#fdfbf9" transform="rotate(-6 29 30)"/>
+        <path d="M6 30 h55 v23 a3 3 0 0 1 -3 3 H9 a3 3 0 0 1 -3 -3 Z" fill="#ff6f1e"/>
+      </g>
+    </symbol>
+    <symbol id="st-mail" viewBox="0 0 64 64">
+      <g stroke="#171717" stroke-width="2" stroke-linejoin="round">
+        <rect x="7" y="15" width="50" height="35" rx="4" fill="#3b82f6"/>
+        <path d="M8 18 L32 36 L56 18" fill="none"/>
+      </g>
+    </symbol>
+    <symbol id="st-pencil" viewBox="0 0 64 64">
+      <g stroke="#171717" stroke-width="2" stroke-linejoin="round">
+        <path d="M15 49 L44 20 L52 28 L23 57 Z" fill="#22c55e"/>
+        <path d="M44 20 L48 16 L56 24 L52 28 Z" fill="#ff6f1e"/>
+        <path d="M15 49 L23 57 L9 61 Z" fill="#f7efe9"/>
+        <path d="M9 61 L11 55.5 L14.5 59 Z" fill="#171717"/>
+      </g>
+    </symbol>
+    <symbol id="st-lens" viewBox="0 0 64 64">
+      <g stroke="#171717" stroke-width="2" stroke-linejoin="round">
+        <path d="M38 40 L52 54 a3.5 3.5 0 0 1 -5 5 L33 45" fill="#ff6f1e"/>
+        <circle cx="27" cy="27" r="17" fill="#22c55e"/>
+        <circle cx="27" cy="27" r="11" fill="#fdfbf9"/>
+        <path d="M21 22 a8 8 0 0 1 6 -4" fill="none" stroke-linecap="round"/>
+      </g>
+    </symbol>
+    <symbol id="st-spark" viewBox="0 0 64 64">
+      <path d="M32 5 C 34 23, 41 30, 59 32 C 41 34, 34 41, 32 59 C 30 41, 23 34, 5 32 C 23 30, 30 23, 32 5 Z" fill="#3b82f6" stroke="#171717" stroke-width="2" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="st-heart" viewBox="0 0 64 64">
+      <path d="M32 55 C 10 41, 5 29, 11 20 C 17 12, 28 13, 32 22 C 36 13, 47 12, 53 20 C 59 29, 54 41, 32 55 Z" fill="#ff6f1e" stroke="#171717" stroke-width="2" stroke-linejoin="round"/>
+    </symbol>
+    <!-- Hand-drawn arrows: 1.5px charcoal, a little wobble, open head. -->
+    <symbol id="arrow-down" viewBox="0 0 54 40">
+      <path d="M4 6 C 18 2, 34 6, 38 18 C 41 26, 38 31, 35 35" fill="none" stroke="#171717" stroke-width="1.5" stroke-linecap="round"/>
+      <path d="M29 30 L 35 36 L 41 31" fill="none" stroke="#171717" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+  </defs>
+</svg>
+
+<div id="top" class="wrap">
+  <header class="top">
+    <a class="brand" href="#top" aria-label="Morpho, back to the top"><svg><use href="#st-fly"/></svg></a>
+    <div class="top-right">
+      <span class="tag tag-exp">design experiment</span>
+      <a class="pill" href="#door">Join the beta</a>
+    </div>
+  </header>
+
+  <!-- 01 · the hero -->
+  <section class="hero" aria-labelledby="h1">
+    <div>
+      <p class="kicker"><span class="hand" style="font-size:28px">morpho.</span></p>
+      <h1 class="h1" id="h1">
+        <span class="h1-lead">You, or someone you love, has a serious diagnosis.</span>
+        <span class="h1-turn">Make Claude your <mark class="hi">health companion</mark>.</span>
+      </h1>
+      <p class="body">it’s not complicated: if you can send an email, you can set this up.</p>
+
+      <form class="form" data-door>
+        <label class="sr" for="hero-email">Your email</label>
+        <div class="form-row">
+          <input id="hero-email" type="email" autocomplete="off" inputmode="email" placeholder="you@example.com" required>
+          <button class="pill" type="submit">Join the beta</button>
+        </div>
+        <p class="form-under">It isn’t open yet. Leave your email and we’ll write once, when it is.</p>
+      </form>
+
+      <p class="micro">free forever · uses your own Claude subscription</p>
+
+      <a class="cue" href="#problem"><span class="hand">Scroll down for more</span><svg aria-hidden="true"><use href="#arrow-down"/></svg></a>
+    </div>
+
+    <div class="hero-art">
+      <figure class="print">
+        <img src="assets/wing-03.jpg" width="1400" height="787" alt="A blue morpho butterfly, wings open, on black.">
+      </figure>
+      <div class="label" role="note">
+        <dl>
+          <dt>Film</dt><dd>Why this exists</dd>
+          <dt>Runs</dt><dd>2:00</dd>
+          <dt>When</dt><dd>Coming soon</dd>
+        </dl>
+        <span class="sr">A two-minute film on why this exists. Coming soon.</span>
+      </div>
+      <span class="sticker l" style="right:-6px; top:0; transform:rotate(12deg); --r2:18deg"><svg><use href="#st-fly"/></svg></span>
+      <span class="sticker s" style="right:30%; bottom:18px; transform:rotate(-10deg); --r2:-16deg"><svg><use href="#st-spark"/></svg></span>
+    </div>
+  </section>
+
+  <!-- 02 · the problem -->
+  <section class="section" id="problem" aria-labelledby="problem-h">
+    <div class="split">
+      <div>
+        <p class="kicker"><span class="hand">The problem</span></p>
+        <h2 class="h2" id="problem-h">A serious diagnosis is overwhelming.</h2>
+        <p class="body">A letter with your test results, a miracle cure IG reel, a friend of a friend’s advice, a result in an app, a random call at 2am. What if something could remember all of it?</p>
+      </div>
+      <div class="pile" aria-hidden="true">
+        <div class="frag frag-sheet"><span class="tag">Letter</span><b>Clinic review, 12 June</b><span class="meta">Page 1 of 3</span></div>
+        <div class="frag frag-sms"><span class="tag">Text</span><b>Your scan has moved to 9 Sep.</b><span class="meta">Reply STOP to opt out</span></div>
+        <div class="frag frag-mail"><span class="tag">Email</span><b>Re: your referral</b><span class="meta">No reply since 14 May</span></div>
+        <div class="frag frag-app"><span class="tag">Health app</span><b>New results available</b><span class="meta">Results · 6 Aug</span></div>
+        <div class="frag frag-sheet"><span class="tag">Notes</span><b>Questions for Tuesday?</b><span class="meta">Half written, 2:14 am</span></div>
+        <span class="sticker" style="right:-10px; top:-26px; transform:rotate(9deg); --r2:14deg"><svg><use href="#st-mail"/></svg></span>
+        <span class="sticker s" style="left:-14px; bottom:4px; transform:rotate(-12deg); --r2:-6deg"><svg><use href="#st-pencil"/></svg></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 · the moment -->
+  <section class="section" id="moment" aria-labelledby="moment-h">
+    <div class="split flip">
+      <div>
+        <p class="kicker"><span class="hand">The moment</span></p>
+        <h2 class="h2" id="moment-h">Every letter, every result. Ask it anything.</h2>
+        <p class="body">Claude can hold more in view than any one person can keep in their head. Give it your records, and every letter, result and scan stays in view at once.</p>
+        <p class="notthis">It explains. It never diagnoses, never advises, never replaces the person treating you.</p>
+      </div>
+      <div style="position:relative; padding: 0 0 40px 6px">
+        <div class="folder" aria-hidden="true">
+          <ol>
+            <li>Referral <span>14 May</span></li>
+            <li>Letter <span>12 Jun</span></li>
+            <li>Results <span>6 Aug</span></li>
+            <li>Scan <span>9 Sep</span></li>
+            <li>Questions <span>Tue</span></li>
+          </ol>
+          <div class="label">One folder, in order</div>
+        </div>
+        <span class="sticker" style="left:min(400px, 78%); top:-30px; transform:rotate(14deg); --r2:8deg"><svg><use href="#st-folder"/></svg></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 · what you build -->
+  <section class="section" id="build" aria-labelledby="build-h">
+    <div class="build-head">
+      <div>
+        <p class="kicker"><span class="hand">What you build</span></p>
+        <h2 class="h2" id="build-h">Eight modules. Each one leaves you <em class="hi">something</em>.</h2>
+        <p class="body">Start with the first. The rest wait until you need them.</p>
+      </div>
+      <figure class="print">
+        <img src="assets/wing-04.jpg" width="1400" height="787" alt="" loading="lazy">
+      </figure>
+    </div>
+
+    <div class="mods">
+      <div class="start-here" aria-hidden="true"><span class="hand" style="font-size:19px">start with the first</span><svg><use href="#arrow-down"/></svg></div>
+      <article class="mod">
+        <p class="mod-num"><b>01</b>/ 08</p>
+        <h3>Get it all in one place</h3>
+        <p class="mod-line">Every letter and result in one folder, in order.</p>
+        <p class="mod-note">First, get Claude: the desktop app and your own subscription, paid to Anthropic, not to us.</p>
+        <div class="mod-build"><p class="hand">What you build</p><p>Your own folder, with your story in order: a timeline, who’s who in your care, and where things stand now.</p></div>
+        <ul class="mod-sheets"><li class="tag">Care team</li><li class="tag">Timeline</li><li class="tag">Now</li></ul>
+      </article>
+      <article class="mod">
+        <p class="mod-num"><b>02</b>/ 08</p>
+        <h3>Walk into appointments ready</h3>
+        <p class="mod-line">Know what to ask, and keep what was said.</p>
+        <div class="mod-build"><p class="hand">What you build</p><p>A one-page summary to hand over, your questions in order of importance, and a note of what was said afterwards.</p></div>
+        <ul class="mod-sheets"><li class="tag">Questions</li><li class="tag">One page</li><li class="tag">Debrief</li></ul>
+      </article>
+      <article class="mod">
+        <p class="mod-num"><b>03</b>/ 08</p>
+        <h3>Understand your results</h3>
+        <p class="mod-line">See how each number has moved, in plain words.</p>
+        <div class="mod-build"><p class="hand">What you build</p><p>A tracker built from your own reports, showing how each number has moved, in plain words, with questions for your team.</p></div>
+        <ul class="mod-sheets"><li class="tag">Tracker</li><li class="tag">Trend</li><li class="tag">Questions</li></ul>
+      </article>
+      <article class="mod">
+        <p class="mod-num"><b>04</b>/ 08</p>
+        <h3>Check what you read</h3>
+        <p class="mod-line">Know what to trust before you take it to your team.</p>
+        <div class="mod-build"><p class="hand">What you build</p><p>A habit that labels every claim (confirmed, secondhand or guesswork) and spots health misinformation.</p></div>
+        <ul class="mod-sheets"><li class="tag">Source</li><li class="tag">Label</li><li class="tag">Red flags</li></ul>
+      </article>
+      <article class="mod">
+        <p class="mod-num"><b>05</b>/ 08</p>
+        <h3>Keep your people in the loop</h3>
+        <p class="mod-line">Tell the people who care once, calmly, on your terms.</p>
+        <div class="mod-build"><p class="hand">What you build</p><p>A daily log that takes seconds, calm family updates you control, and a carer set-up agreed together.</p></div>
+        <ul class="mod-sheets"><li class="tag">Daily log</li><li class="tag">Update</li><li class="tag">Consent</li></ul>
+      </article>
+      <article class="mod">
+        <p class="mod-num"><b>06</b>/ 08</p>
+        <h3>One page for a stranger</h3>
+        <p class="mod-line">For the person who has never met you.</p>
+        <div class="mod-build"><p class="hand">What you build</p><p>A handover that stays current, and a five-line card for your wallet or phone.</p></div>
+        <ul class="mod-sheets"><li class="tag">Handover</li><li class="tag">Wallet card</li><li class="tag">Updated</li></ul>
+      </article>
+      <article class="mod">
+        <p class="mod-num"><b>07</b>/ 08</p>
+        <h3>Ask for a second opinion</h3>
+        <p class="mod-line">Get your records in front of another doctor.</p>
+        <div class="mod-build"><p class="hand">What you build</p><p>Who’s who from your own letters, the request for your full records, and the letters drafted for you to send.</p></div>
+        <ul class="mod-sheets"><li class="tag">Contacts</li><li class="tag">Request</li><li class="tag">Draft</li></ul>
+      </article>
+      <article class="mod">
+        <p class="mod-num"><b>08</b>/ 08</p>
+        <h3>Find research to ask your team about</h3>
+        <p class="mod-line">What is being studied now, read against your file.</p>
+        <div class="mod-build"><p class="hand">What you build</p><p>A dated shortlist from the public registries, read against your records, with the message to your own team first.</p></div>
+        <ul class="mod-sheets"><li class="tag">Shortlist</li><li class="tag">Gaps</li><li class="tag">Message</li></ul>
+      </article>
+      <span class="sticker" style="right:-14px; bottom:-30px; transform:rotate(-11deg); --r2:-4deg"><svg><use href="#st-lens"/></svg></span>
+    </div>
+  </section>
+
+  <!-- 05 · starts from zero -->
+  <section class="section" id="zero" aria-labelledby="zero-h">
+    <p class="kicker"><span class="hand">Starts from zero</span></p>
+    <h2 class="h2" id="zero-h">Every step is <em class="hi">shown</em>.</h2>
+    <p class="body">A weekend at most, and it saves as you go. Stop on a bad day and nothing is lost.</p>
+
+    <figure class="zero" aria-label="Your health folder, on your own computer, with one path into your own conversation with Claude" style="margin-left:0; margin-right:0">
+      <div class="zfolder">
+        <div class="zpapers" aria-hidden="true">
+          <div class="zpaper"><b>Letter</b>12 Jun</div>
+          <div class="zpaper"><b>Results</b>6 Aug</div>
+          <div class="zpaper"><b>Appointment note</b>Tue</div>
+        </div>
+        <div class="zbox">
+          <div class="label"><b style="font-weight:500; font-style:normal">Your health folder</b><br><small style="font-family:var(--font-ui); color:var(--muted)">On your own computer</small></div>
+        </div>
+      </div>
+
+      <div class="zpath">
+        <svg class="wide" viewBox="0 0 240 70" fill="none" aria-hidden="true">
+          <circle cx="8" cy="44" r="4.5" fill="#171717"/>
+          <path d="M8 44 C 52 46, 64 14, 116 16 C 160 18, 176 44, 224 42" stroke="#171717" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="2 7"/>
+          <path d="M214 34 L 226 42 L 215 51" stroke="#171717" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <svg class="tall" viewBox="0 0 60 110" fill="none" aria-hidden="true">
+          <circle cx="30" cy="6" r="4.5" fill="#171717"/>
+          <path d="M30 6 C 30 36, 12 44, 14 60 C 16 76, 31 82, 30 100" stroke="#171717" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="2 7"/>
+          <path d="M22 93 L 30 104 L 38 93" stroke="#171717" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <p class="hand">The only place they ever travel is into your own conversation with Claude, under your own account</p>
+      </div>
+
+      <div class="chat">
+        <div class="chat-bar" aria-hidden="true"><i></i><i></i><i></i><b>Claude</b><small>Your own account</small></div>
+        <div class="chat-body">
+          <p class="chat-q">I don’t understand this letter from June 12. Can you break it down for me and suggest next steps?</p>
+          <div class="chat-a">
+            <p>I’ve written a plain-English explanation of the letter. I’ve also prepared two draft emails for you to look over: one asking for a second opinion, and one asking your team about research that might apply to you.</p>
+            <span class="tag">From: Letter, 12 June · page 1</span>
+          </div>
+        </div>
+        <div class="chat-in" aria-hidden="true">Ask about your folder</div>
+      </div>
+    </figure>
+  </section>
+
+  <!-- 06 · the door -->
+  <section class="section" id="door" aria-labelledby="door-h">
+    <div class="door">
+      <div id="get">
+        <h2 class="h2" id="door-h">Leave your email. We’ll write <em class="hi">once</em>, when it opens.</h2>
+        <form class="form" data-door>
+          <label class="form-under" for="door-email" style="display:block; margin:0 0 8px">Your email</label>
+          <div class="form-row">
+            <input id="door-email" type="email" autocomplete="off" inputmode="email" placeholder="you@example.com" required>
+            <button class="pill" type="submit">Join the beta</button>
+          </div>
+          <p class="form-under">It isn’t open yet. Leave your email and we’ll write once, when it is.</p>
+          <p class="form-fine">Your address is kept in a list that belongs to Morpho and nobody else. Nothing here asks about your health. <a href="https://morpho-course.pages.dev/privacy/" rel="noopener">Privacy</a>.</p>
+        </form>
+        <p class="signed"><span class="hand" style="font-size:inherit">Built by James, for someone I love.</span></p>
+      </div>
+      <div style="position:relative; padding: 20px 6px">
+        <figure class="print">
+          <img src="assets/wing-cover.jpg" width="1024" height="688" alt="" loading="lazy">
+        </figure>
+        <span class="sticker" style="left:-14px; bottom:-6px; transform:rotate(-12deg); --r2:-18deg"><svg><use href="#st-heart"/></svg></span>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- The footer band -->
+<footer class="band">
+  <div class="wrap">
+    <div class="fgrid">
+      <div>
+        <p class="wordmark">Morpho</p>
+        <p class="fmeta">© 2026 Morpho<br>Organisation, preparation and research literacy</p>
+      </div>
+      <nav class="flinks" aria-label="Footer">
+        <a href="#get">Join the beta</a>
+        <a href="#top">What Morpho is</a>
+        <a href="https://www.morphocompanion.com/more#faq">Questions</a>
+        <a href="https://www.morphocompanion.com/more#lineage">Where this comes from</a>
+        <a href="https://www.morphocompanion.com/more#thanks">Saying thanks</a>
+        <a href="mailto:james+morpho@vagabondingmedia.com">Write to us</a>
+        <a href="https://morpho-course.pages.dev/privacy/" rel="noopener">Privacy and terms</a>
+      </nav>
+    </div>
+    <p class="fpurpose">Morpho is a set of instructions and templates for organising your own records and preparing your own questions. <a href="https://www.morphocompanion.com/what-it-does-not-do">What Morpho does not do, and what it is</a></p>
+    <p class="disclaimer"><b><a href="https://www.morphocompanion.com/what-it-does-not-do">Morpho supplements your medical care. It never replaces it.</a></b> It organises, prepares and explains. It does not diagnose, does not recommend or discourage any treatment, and is not a substitute for advice from your medical team. If something is wrong right now, call your emergency number. Questions, stuck, or built something? Write to <a href="mailto:james+morpho@vagabondingmedia.com">james+morpho@vagabondingmedia.com</a>. A person replies.</p>
+    <p class="fsmall">Free, forever · Not a medical device · For adults</p>
+    <p class="expnote">Design experiment, October 2026. Not the live site and not indexed. The forms on this page collect nothing. The real front door is <a href="https://www.morphocompanion.com">www.morphocompanion.com</a>.</p>
+  </div>
+</footer>
+
+<script>
+/* Visual-only door: nothing is read, stored or sent. The inputs carry no
+   name, and submit only swaps the form for a plain note. */
+document.querySelectorAll("form[data-door]").forEach(function (form) {
+  form.addEventListener("submit", function (event) {
+    event.preventDefault();
+    var note = document.createElement("p");
+    note.className = "form-said";
+    note.setAttribute("role", "status");
+    note.innerHTML = 'This is a design experiment, so nothing was sent. The real door is at <a href="https://www.morphocompanion.com">morphocompanion.com</a>.';
+    var row = form.querySelector(".form-row");
+    row.replaceWith(note);
+  });
+});
+</script>
+</body>
+</html>
