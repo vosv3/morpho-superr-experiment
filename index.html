@@ -271,10 +271,37 @@ em.hi { font-style: normal; background: var(--underline) left bottom / 100% .3em
 .mod h3 { font-size: 24px; line-height: 1.2; }
 .mod-line { font-size: 18px; line-height: 1.45; }
 .mod-note { font-family: var(--font-ui); font-size: 15px; line-height: 1.45; color: var(--muted); }
-.mod-build { margin-top: auto; padding-top: 14px; border-top: 1.5px dashed var(--mist); }
-.mod-build .hand { font-size: 18px; transform: rotate(-2deg); margin-bottom: 6px; }
-.mod-build p:last-child { font-size: 16px; line-height: 1.45; color: var(--cocoa); }
-.mod-sheets { list-style: none; margin: 4px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+/* Closed, a card is its number, name and one line. The whole card is the
+   toggle (the button's ::after covers it); open, it shows what you build. */
+.mods { align-items: start; }
+.mod { position: relative; cursor: pointer; }
+@media (min-width: 1040px) {
+  .mod h3 { min-height: 3.6em; }
+  .mod-line { min-height: 4.35em; }
+}
+.mod-toggle {
+  margin-top: 6px; padding: 12px 0 0; border: 0; border-top: 1.5px dashed var(--mist); background: none;
+  display: flex; align-items: center; justify-content: space-between; gap: 10px; width: 100%;
+  font-family: var(--font-display); font-style: italic; font-size: 19px; color: var(--sienna);
+  text-align: left; cursor: pointer;
+}
+.mod-toggle::after { content: ""; position: absolute; inset: 0; border-radius: var(--r-card); }
+.mod-toggle:focus-visible { outline: none; }
+.mod:has(.mod-toggle:focus-visible) { outline: 2px solid var(--charcoal); outline-offset: 3px; }
+.mod-toggle i {
+  flex: 0 0 auto; position: relative; width: 30px; height: 30px; border: 1.5px solid var(--charcoal);
+  border-radius: 50%; background: var(--cream); box-shadow: var(--shadow-subtle); transition: transform .25s ease;
+}
+.mod-toggle i::before, .mod-toggle i::after { content: ""; position: absolute; left: 50%; top: 50%; width: 12px; height: 1.5px; background: var(--charcoal); transform: translate(-50%, -50%); }
+.mod-toggle i::after { transform: translate(-50%, -50%) rotate(90deg); }
+.mod.open .mod-toggle i { transform: rotate(45deg); background: var(--dew); }
+.mod-more { display: grid; grid-template-rows: 0fr; visibility: hidden; transition: grid-template-rows .3s ease, visibility 0s .3s; }
+.mod-more > div { overflow: hidden; min-height: 0; }
+.mod.open .mod-more { grid-template-rows: 1fr; visibility: visible; transition: grid-template-rows .3s ease, visibility 0s 0s; }
+.mod.open { box-shadow: var(--shadow-lg); }
+.mod-build { font-size: 16px; line-height: 1.45; color: var(--cocoa); padding-top: 4px; }
+.mod-sheets { list-style: none; margin: 12px 0 2px; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+@media (prefers-reduced-motion: reduce) { .mod-more, .mod.open .mod-more, .mod-toggle i { transition: none; } }
 
 .start-here { position: absolute; left: 4px; top: -46px; display: flex; align-items: flex-end; gap: 4px; pointer-events: none; }
 .start-here svg { width: 46px; height: 40px; }
@@ -528,57 +555,81 @@ em.hi { font-style: normal; background: var(--underline) left bottom / 100% .3em
         <h3>Get it all in one place</h3>
         <p class="mod-line">Every letter and result in one folder, in order.</p>
         <p class="mod-note">First, get Claude: the desktop app and your own subscription, paid to Anthropic, not to us.</p>
-        <div class="mod-build"><p class="hand">What you build</p><p>Your own folder, with your story in order: a timeline, who’s who in your care, and where things stand now.</p></div>
-        <ul class="mod-sheets"><li class="tag">Care team</li><li class="tag">Timeline</li><li class="tag">Now</li></ul>
+        <button class="mod-toggle" type="button" aria-expanded="false" aria-controls="mod-01-more"><span>What you build</span><i aria-hidden="true"></i></button>
+        <div class="mod-more" id="mod-01-more"><div>
+          <p class="mod-build">Your own folder, with your story in order: a timeline, who’s who in your care, and where things stand now.</p>
+          <ul class="mod-sheets"><li class="tag">Care team</li><li class="tag">Timeline</li><li class="tag">Now</li></ul>
+        </div></div>
       </article>
       <article class="mod">
         <p class="mod-num"><b>02</b>/ 08</p>
         <h3>Walk into appointments ready</h3>
         <p class="mod-line">Know what to ask, and keep what was said.</p>
-        <div class="mod-build"><p class="hand">What you build</p><p>A one-page summary to hand over, your questions in order of importance, and a note of what was said afterwards.</p></div>
-        <ul class="mod-sheets"><li class="tag">Questions</li><li class="tag">One page</li><li class="tag">Debrief</li></ul>
+        <button class="mod-toggle" type="button" aria-expanded="false" aria-controls="mod-02-more"><span>What you build</span><i aria-hidden="true"></i></button>
+        <div class="mod-more" id="mod-02-more"><div>
+          <p class="mod-build">A one-page summary to hand over, your questions in order of importance, and a note of what was said afterwards.</p>
+          <ul class="mod-sheets"><li class="tag">Questions</li><li class="tag">One page</li><li class="tag">Debrief</li></ul>
+        </div></div>
       </article>
       <article class="mod">
         <p class="mod-num"><b>03</b>/ 08</p>
         <h3>Understand your results</h3>
         <p class="mod-line">See how each number has moved, in plain words.</p>
-        <div class="mod-build"><p class="hand">What you build</p><p>A tracker built from your own reports, showing how each number has moved, in plain words, with questions for your team.</p></div>
-        <ul class="mod-sheets"><li class="tag">Tracker</li><li class="tag">Trend</li><li class="tag">Questions</li></ul>
+        <button class="mod-toggle" type="button" aria-expanded="false" aria-controls="mod-03-more"><span>What you build</span><i aria-hidden="true"></i></button>
+        <div class="mod-more" id="mod-03-more"><div>
+          <p class="mod-build">A tracker built from your own reports, showing how each number has moved, in plain words, with questions for your team.</p>
+          <ul class="mod-sheets"><li class="tag">Tracker</li><li class="tag">Trend</li><li class="tag">Questions</li></ul>
+        </div></div>
       </article>
       <article class="mod">
         <p class="mod-num"><b>04</b>/ 08</p>
         <h3>Check what you read</h3>
         <p class="mod-line">Know what to trust before you take it to your team.</p>
-        <div class="mod-build"><p class="hand">What you build</p><p>A habit that labels every claim (confirmed, secondhand or guesswork) and spots health misinformation.</p></div>
-        <ul class="mod-sheets"><li class="tag">Source</li><li class="tag">Label</li><li class="tag">Red flags</li></ul>
+        <button class="mod-toggle" type="button" aria-expanded="false" aria-controls="mod-04-more"><span>What you build</span><i aria-hidden="true"></i></button>
+        <div class="mod-more" id="mod-04-more"><div>
+          <p class="mod-build">A habit that labels every claim (confirmed, secondhand or guesswork) and spots health misinformation.</p>
+          <ul class="mod-sheets"><li class="tag">Source</li><li class="tag">Label</li><li class="tag">Red flags</li></ul>
+        </div></div>
       </article>
       <article class="mod">
         <p class="mod-num"><b>05</b>/ 08</p>
         <h3>Keep your people in the loop</h3>
         <p class="mod-line">Tell the people who care once, calmly, on your terms.</p>
-        <div class="mod-build"><p class="hand">What you build</p><p>A daily log that takes seconds, calm family updates you control, and a carer set-up agreed together.</p></div>
-        <ul class="mod-sheets"><li class="tag">Daily log</li><li class="tag">Update</li><li class="tag">Consent</li></ul>
+        <button class="mod-toggle" type="button" aria-expanded="false" aria-controls="mod-05-more"><span>What you build</span><i aria-hidden="true"></i></button>
+        <div class="mod-more" id="mod-05-more"><div>
+          <p class="mod-build">A daily log that takes seconds, calm family updates you control, and a carer set-up agreed together.</p>
+          <ul class="mod-sheets"><li class="tag">Daily log</li><li class="tag">Update</li><li class="tag">Consent</li></ul>
+        </div></div>
       </article>
       <article class="mod">
         <p class="mod-num"><b>06</b>/ 08</p>
         <h3>One page for a stranger</h3>
         <p class="mod-line">For the person who has never met you.</p>
-        <div class="mod-build"><p class="hand">What you build</p><p>A handover that stays current, and a five-line card for your wallet or phone.</p></div>
-        <ul class="mod-sheets"><li class="tag">Handover</li><li class="tag">Wallet card</li><li class="tag">Updated</li></ul>
+        <button class="mod-toggle" type="button" aria-expanded="false" aria-controls="mod-06-more"><span>What you build</span><i aria-hidden="true"></i></button>
+        <div class="mod-more" id="mod-06-more"><div>
+          <p class="mod-build">A handover that stays current, and a five-line card for your wallet or phone.</p>
+          <ul class="mod-sheets"><li class="tag">Handover</li><li class="tag">Wallet card</li><li class="tag">Updated</li></ul>
+        </div></div>
       </article>
       <article class="mod">
         <p class="mod-num"><b>07</b>/ 08</p>
         <h3>Ask for a second opinion</h3>
         <p class="mod-line">Get your records in front of another doctor.</p>
-        <div class="mod-build"><p class="hand">What you build</p><p>Who’s who from your own letters, the request for your full records, and the letters drafted for you to send.</p></div>
-        <ul class="mod-sheets"><li class="tag">Contacts</li><li class="tag">Request</li><li class="tag">Draft</li></ul>
+        <button class="mod-toggle" type="button" aria-expanded="false" aria-controls="mod-07-more"><span>What you build</span><i aria-hidden="true"></i></button>
+        <div class="mod-more" id="mod-07-more"><div>
+          <p class="mod-build">Who’s who from your own letters, the request for your full records, and the letters drafted for you to send.</p>
+          <ul class="mod-sheets"><li class="tag">Contacts</li><li class="tag">Request</li><li class="tag">Draft</li></ul>
+        </div></div>
       </article>
       <article class="mod">
         <p class="mod-num"><b>08</b>/ 08</p>
         <h3>Find research to ask your team about</h3>
         <p class="mod-line">What is being studied now, read against your file.</p>
-        <div class="mod-build"><p class="hand">What you build</p><p>A dated shortlist from the public registries, read against your records, with the message to your own team first.</p></div>
-        <ul class="mod-sheets"><li class="tag">Shortlist</li><li class="tag">Gaps</li><li class="tag">Message</li></ul>
+        <button class="mod-toggle" type="button" aria-expanded="false" aria-controls="mod-08-more"><span>What you build</span><i aria-hidden="true"></i></button>
+        <div class="mod-more" id="mod-08-more"><div>
+          <p class="mod-build">A dated shortlist from the public registries, read against your records, with the message to your own team first.</p>
+          <ul class="mod-sheets"><li class="tag">Shortlist</li><li class="tag">Gaps</li><li class="tag">Message</li></ul>
+        </div></div>
       </article>
       <span class="sticker" style="right:-14px; bottom:-30px; transform:rotate(-11deg); --r2:-4deg"><svg><use href="#st-lens"/></svg></span>
     </div>
@@ -682,6 +733,15 @@ em.hi { font-style: normal; background: var(--underline) left bottom / 100% .3em
 </footer>
 
 <script>
+/* Module cards open and close. Several can be open at once. */
+document.querySelectorAll(".mod-toggle").forEach(function (button) {
+  button.addEventListener("click", function () {
+    var open = button.getAttribute("aria-expanded") !== "true";
+    button.setAttribute("aria-expanded", String(open));
+    button.closest(".mod").classList.toggle("open", open);
+  });
+});
+
 /* Visual-only door: nothing is read, stored or sent. The inputs carry no
    name, and submit only swaps the form for a plain note. */
 document.querySelectorAll("form[data-door]").forEach(function (form) {
